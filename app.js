@@ -40,12 +40,11 @@ app.post("/", function (req, res) {
     };
 
     var jsonData = JSON.stringify(data);
-
     var options = {
-        url: "https://us20.api.mailchimp.com/3.0/lists/616ed90654",
+        url: "https://us20.api.mailchimp.com/3.0/lists/"+ process.env.listId,
         method: "POST",
         headers: {
-            "Authorization": "jchacon 09c43c1e69c10617ce258d0e53d7bfb0-us20 "
+            "Authorization": "jchacon "+ process.env.apiKey
         },
         body: jsonData
     };
@@ -56,7 +55,11 @@ app.post("/", function (req, res) {
         if (error) {
             res.sendFile(__dirname + "/failure.html");
 
+            console.log(error);
+
         } else {
+
+            console.log(response.statusCode);
 
             if (response.statusCode === 200) {
                 res.sendFile(__dirname + "/success.html");
@@ -71,7 +74,6 @@ app.post("/", function (req, res) {
 
 
 })
-
 
 
 app.post("/failure", function(req,res){
